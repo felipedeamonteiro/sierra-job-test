@@ -1,24 +1,16 @@
 import { useRef } from 'react';
-import { UploadProgress } from '../types';
+import { useFileUpload } from '../hooks/useFileUpload';
 
-interface UploadAreaProps {
-  isDragOver: boolean;
-  uploadProgress: UploadProgress[];
-  onFileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onDrop: (e: React.DragEvent) => void;
-  onDragOver: (e: React.DragEvent) => void;
-  onDragLeave: (e: React.DragEvent) => void;
-}
-
-export default function UploadArea({
-  isDragOver,
-  uploadProgress,
-  onFileUpload,
-  onDrop,
-  onDragOver,
-  onDragLeave,
-}: UploadAreaProps) {
+export default function UploadArea() {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const {
+    uploadProgress,
+    isDragOver,
+    handleFileUpload,
+    handleDrop,
+    handleDragOver,
+    handleDragLeave,
+  } = useFileUpload();
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6 mb-8">
@@ -28,9 +20,9 @@ export default function UploadArea({
             ? 'border-blue-500 bg-blue-50' 
             : 'border-gray-300 hover:border-gray-400'
         }`}
-        onDrop={onDrop}
-        onDragOver={onDragOver}
-        onDragLeave={onDragLeave}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
       >
         <div className="text-6xl mb-4">📁</div>
         <h3 className="text-xl text-gray-300 font-semibold mb-2">Drop files here or click to upload</h3>
@@ -46,7 +38,7 @@ export default function UploadArea({
           type="file"
           multiple
           accept=".pdf,.docx,.txt"
-          onChange={onFileUpload}
+          onChange={handleFileUpload}
           className="hidden"
         />
       </div>

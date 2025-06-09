@@ -1,24 +1,18 @@
-import { SearchResult } from '../types';
+import {useDocumentContext} from '@/contexts/DocumentContext';
+import { useSearch } from '../hooks/useSearch';
 
-interface SearchSectionProps {
-  searchQuery: string;
-  searchResults: SearchResult[];
-  selectedFileType: string;
-  isSearching: boolean;
-  onSearchQueryChange: (query: string) => void;
-  onFileTypeChange: (type: string) => void;
-  onSearch: () => void;
-}
+export default function SearchSection() {
+  const {
+    searchQuery,
+    searchResults,
+    selectedFileType,
+    isSearching,
+    performSearch,
+    setSearchQuery,
+    setSelectedFileType,
+  } = useSearch();
+  const { dispatch } = useDocumentContext();
 
-export default function SearchSection({
-  searchQuery,
-  searchResults,
-  selectedFileType,
-  isSearching,
-  onSearchQueryChange,
-  onFileTypeChange,
-  onSearch,
-}: SearchSectionProps) {
   const getFileTypeIcon = (type: string): string => {
     switch (type) {
       case 'application/pdf': return '📄';
@@ -28,9 +22,9 @@ export default function SearchSection({
     }
   };
 
-  const onClear = () => {
-    onSearchQueryChange('');
-    onFileTypeChange('all');
+  const handleClear = () => {
+    dispatch({ type: 'CLEAR_SEARCH' });
+    setSelectedFileType('all');
   };
 
   return (
@@ -41,21 +35,21 @@ export default function SearchSection({
             type="text"
             placeholder="Search through your documents..."
             value={searchQuery}
-            onChange={(e) => onSearchQueryChange(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && onSearch()}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && performSearch()}
             className="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
         <button
-          onClick={onClear}
+          onClick={handleClear}
           disabled={searchResults.length === 0 || isSearching}
           className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:cursor-pointer font-bold hover:bg-gray-300 disabled:opacity-50 transition-colors"
         >
-          Clean Search
+          Clear Search
         </button>
         <select
           value={selectedFileType}
-          onChange={(e) => onFileTypeChange(e.target.value)}
+          onChange={(e) => setSelectedFileType(e.target.value)}
           className="px-4 py-2 border hover:cursor-pointer border-gray-300 text-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500"
         >
           <option value="all">All Types</option>
@@ -64,7 +58,7 @@ export default function SearchSection({
           <option value="text/plain">TXT</option>
         </select>
         <button
-          onClick={onSearch}
+          onClick={performSearch}
           disabled={isSearching}
           className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:cursor-pointer font-bold hover:bg-blue-800 disabled:opacity-50 transition-colors"
         >
