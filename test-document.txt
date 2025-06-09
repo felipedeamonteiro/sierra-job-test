@@ -1,0 +1,30 @@
+Document Search Hub Test File
+
+This is a sample text document to test the search functionality of the Document Search Hub application.
+
+Key Features to Test:
+- File upload functionality
+- Text extraction from documents
+- Full-text search capabilities
+- Search result highlighting
+- Document management
+
+Sample Content for Search Testing:
+- JavaScript programming language
+- React framework development
+- Next.js application building
+- TypeScript type safety
+- Tailwind CSS styling
+- PDF document processing
+- DOCX file handling
+- Text file management
+
+Search Terms to Try:
+- "JavaScript" - should find this term
+- "React" - should highlight React framework
+- "search" - should find multiple instances
+- "document" - should appear in several places
+- "test" - should match testing content
+- "leão"
+
+This document contains various keywords and phrases that can be used to test the search functionality and verify that the text extraction and search highlighting features are working correctly.

@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Document Search Hub
+
+A modern, feature-rich document upload and search application built with Next.js, TypeScript, and Tailwind CSS.
+
+## Features
+
+### 🚀 Enhanced User Experience
+- **Drag & Drop Interface**: Intuitive file dropping with visual feedback
+- **Progress Indicators**: Real-time upload progress and processing status
+- **Responsive Design**: Works seamlessly across all devices
+- **Loading States**: Clear feedback during file processing
+
+### 📄 Advanced File Processing
+- **Multiple File Support**: Batch upload and processing
+- **File Type Support**: PDF, DOCX, and TXT files
+- **File Validation**: Type and size validation (10MB limit)
+- **Metadata Extraction**: File size, type, upload date, page count
+
+### 🔍 Powerful Search Capabilities
+- **Full-Text Search**: Advanced search with highlighting
+- **Search Filters**: Filter by file type
+- **Search Snippets**: Context-rich search results with highlighting
+- **Real-time Search**: Instant search as you type
+- **Match Count**: Shows number of matches per document
+
+### 💾 Data Management
+- **Persistent Storage**: Documents saved in localStorage
+- **File Management**: Delete files with one click
+- **Sorting Options**: Sort by name, date, or size
+- **Document Library**: Visual grid layout with file previews
+
+### 🛡️ Error Handling & Accessibility
+- **Comprehensive Error Handling**: User-friendly error messages
+- **File Size Limits**: Prevents oversized uploads
+- **Type Validation**: Clear feedback for unsupported formats
+
+## Requirements Analysis
+
+### Why These Features Provide the Best Experience
+
+1. **User-Centric Design**: The drag & drop interface reduces friction and makes file uploading intuitive
+2. **Performance**: Optimized text extraction and instant search provide immediate results
+3. **Reliability**: Proper error handling prevents user frustration and provides clear feedback
+4. **Scalability**: Supports multiple files and handles large document collections efficiently
+5. **Accessibility**: Clean, responsive design ensures usability across devices
+
+## Technology Stack
+
+- **Next.js 15**: React framework with App Router
+- **TypeScript**: Type-safe development
+- **Tailwind CSS**: Utility-first CSS framework
+- **PDF.js**: PDF text extraction
+- **Mammoth.js**: DOCX text extraction
+- **React Hooks**: Modern state management
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd take-home-challenge-sierra
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+### Uploading Files
+1. **Drag & Drop**: Simply drag files onto the upload area
+2. **Click to Upload**: Click the "Choose Files" button to select files
+3. **Multiple Files**: Upload multiple files at once
+4. **Progress Tracking**: Watch real-time upload and processing progress
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Searching Documents
+1. **Enter Search Terms**: Type in the search box
+2. **Filter by Type**: Use the dropdown to filter by file type
+3. **View Results**: See highlighted snippets with match counts
+4. **Navigate Results**: Click through search results with context
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Managing Documents
+1. **View Library**: Browse all uploaded documents in the library
+2. **Sort Documents**: Sort by name, date, or size
+3. **Delete Files**: Click the trash icon to remove documents
+4. **View Metadata**: See file size, upload date, and page count
 
-## Deploy on Vercel
+## Supported File Types
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **PDF** (.pdf): Extracts text from all pages
+- **DOCX** (.docx): Extracts formatted text content
+- **TXT** (.txt): Plain text files
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## File Size Limits
+
+- Maximum file size: 10MB per file
+- No limit on number of files
+- Batch processing supported
+
+## Browser Compatibility
+
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
+
+## Performance Considerations
+
+- Text extraction is performed client-side
+- Documents stored in localStorage (browser storage limits apply)
+- Search is performed in-memory for instant results
+- Optimized for files up to 10MB
+
+## Future Enhancements
+
+- Server-side storage integration
+- Advanced search operators (AND, OR, NOT)
+- Document preview functionality
+- Export search results
+- OCR for scanned documents
+- Cloud storage integration
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
