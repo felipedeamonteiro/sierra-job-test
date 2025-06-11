@@ -9,8 +9,10 @@ export function useDocumentManagement() {
   }, [dispatch]);
 
   const clearAllDocuments = useCallback(() => {
-    // Clear localStorage
-    localStorage.removeItem('documents');
+    // Clear localStorage (check if it exists first)
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('documents');
+    }
     // Reset state
     dispatch({ type: 'CLEAR_ALL_DOCUMENTS' });
     // Show confirmation

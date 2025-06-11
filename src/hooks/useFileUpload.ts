@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react';
-import mammoth from 'mammoth/mammoth.browser';
 import { Document, UploadProgress } from '../types';
 import { useDocumentContext } from '../contexts/DocumentContext';
 
@@ -39,6 +38,7 @@ export function useFileUpload() {
               throw new Error('PDF processing failed. This may be due to a complex PDF format or network issues. Please try again or use a TXT/DOCX file instead.');
             }
           } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+            const mammoth = await import('mammoth/mammoth.browser');
             const result = await mammoth.extractRawText({ arrayBuffer });
             text = result.value;
           } else if (file.type === 'text/plain') {
@@ -58,7 +58,7 @@ export function useFileUpload() {
     });
   };
 
-  const processFiles = async (files: FileList) => {
+  const processFiles = useCallback(async (files: FileList) => {
     const fileArray = Array.from(files);
     const supportedTypes = [
       'application/pdf',
@@ -132,14 +132,14 @@ export function useFileUpload() {
     setTimeout(() => {
       setUploadProgress([]);
     }, 3000);
-  };
+  }, [dispatch]);
 
   const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
       processFiles(files);
     }
-  }, []);
+  }, [processFiles]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -149,7 +149,7 @@ export function useFileUpload() {
     if (files.length > 0) {
       processFiles(files);
     }
-  }, []);
+  }, [processFiles]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();

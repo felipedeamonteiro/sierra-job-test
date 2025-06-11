@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
 import { Document, SearchResult } from '@/types';
 
 interface DocumentState {
@@ -78,9 +78,13 @@ const DocumentContext = createContext<DocumentContextType | undefined>(undefined
 
 export function DocumentProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(documentReducer, initialState);
+  const [isHydrated, setIsHydrated] = useState(false);
 
-  // Load documents from localStorage on mount
+  // Handle hydration
   useEffect(() => {
+    setIsHydrated(true);
+    
+    // Load documents from localStorage on mount
     const stored = localStorage.getItem('documents');
     if (stored) {
       try {
@@ -92,12 +96,12 @@ export function DocumentProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Save documents to localStorage whenever documents change
+  // Save documents to localStorage whenever documents change (only after hydration)
   useEffect(() => {
-    if (state.documents.length > 0) {
+    if (isHydrated && state.documents.length > 0) {
       localStorage.setItem('documents', JSON.stringify(state.documents));
     }
-  }, [state.documents]);
+  }, [state.documents, isHydrated]);
 
   return (
     <DocumentContext.Provider value={{ state, dispatch }}>
