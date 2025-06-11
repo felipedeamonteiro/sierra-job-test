@@ -1,6 +1,10 @@
-# Document Search Hub
+# Sierra Studio Job Test - Document Search Hub
 
 A modern, feature-rich document upload and search application built with Next.js, TypeScript, and Tailwind CSS.
+
+## Live PoC website of this application
+
+- Open [Document Search Hub](https://sierra-job-test-vdlu.vercel.app/) on your browser.
 
 ## Features
 
@@ -111,36 +115,12 @@ npm run dev
 - No limit on number of files
 - Batch processing supported
 
-## Browser Compatibility
-
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
-
 ## Performance Considerations
 
 - Text extraction is performed client-side
 - Documents stored in localStorage (browser storage limits apply)
 - Search is performed in-memory for instant results
 - Optimized for files up to 10MB
-
-## Future Enhancements
-
-- Server-side storage integration
-- Advanced search operators (AND, OR, NOT)
-- Document preview functionality
-- Export search results
-- OCR for scanned documents
-- Cloud storage integration
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
 
 ## License
 
