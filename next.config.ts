@@ -1,16 +1,17 @@
 import type { NextConfig } from "next";
-import webpack from "webpack";
 
 const nextConfig: NextConfig = {
   /* config options here */
   
-  // Disable Turbopack to use Webpack consistently
-  experimental: {
-    turbo: undefined,
-  },
-  
-  webpack: (config, { isServer }) => {
-    config.resolve.fallback = { fs: false, path: false };
+  webpack: (config, { isServer, dev }) => {
+    // Basic fallbacks for Node.js modules
+    config.resolve.fallback = { 
+      fs: false, 
+      path: false,
+      crypto: false,
+      stream: false,
+      buffer: false
+    };
     
     // Handle PDF.js worker
     config.resolve.alias = {
@@ -24,36 +25,39 @@ const nextConfig: NextConfig = {
       config.externals.push('mammoth');
       config.externals.push('mammoth/mammoth.browser');
     } else {
-      // For client-side builds, configure mammoth properly
+      // For client-side builds, use mammoth browser version
       config.resolve.alias = {
         ...config.resolve.alias,
         'mammoth': 'mammoth/mammoth.browser',
       };
-      
-      // Add webpack plugin to ignore dynamic requires in mammoth
-      config.plugins = config.plugins || [];
-      config.plugins.push(
-        new webpack.IgnorePlugin({
-          resourceRegExp: /^\.\/locale$/,
-          contextRegExp: /mammoth/,
-        })
-      );
-      
-      // Configure webpack to handle mammoth's dynamic requires
-      config.module.rules.push({
-        test: /mammoth\.browser\.js$/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-            plugins: [
-              ['@babel/plugin-transform-modules-commonjs', { loose: true }],
-              '@babel/plugin-transform-dynamic-import'
-            ]
-          }
-        }
-      });
     }
+    
+    // Disable minification entirely to prevent webpack errors with mammoth.js
+    if (!dev) {
+      config.optimization = config.optimization || {};
+      config.optimization.minimize = false;
+    }
+    
+    // Handle mammoth's dynamic requires by ignoring them
+    config.module = config.module || {};
+    config.module.rules = config.module.rules || [];
+    
+    // Add a rule to handle mammoth's problematic requires
+    config.module.rules.push({
+      test: /mammoth\.browser\.js$/,
+      parser: {
+        amd: false,
+        commonjs: false,
+        system: false,
+        harmony: false,
+        requireInclude: false,
+        requireEnsure: false,
+        requireContext: false,
+        browserify: false,
+        requireJs: false,
+        node: false
+      }
+    });
     
     return config;
   },
